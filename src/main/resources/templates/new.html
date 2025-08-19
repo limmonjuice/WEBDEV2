@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Car</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #ff7043; /* orange */
+            font-weight: 600;
+        }
+
+        form {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 600px; /* wider form */
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        label {
+            font-weight: 500;
+            margin-bottom: 6px;
+            display: block;
+            color: #333;
+        }
+
+        input, select {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            width: 100%; /* make fields equal width */
+            box-sizing: border-box;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #009688; /* teal */
+            box-shadow: 0 0 4px rgba(0,150,136,0.4);
+        }
+
+        button {
+            padding: 14px;
+            background: #009688; /* teal */
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s ease;
+            width: 100%; /* button matches width */
+        }
+
+        button:hover {
+            background: #00796b; /* darker teal */
+        }
+
+        a {
+            margin-top: 20px;
+            text-decoration: none;
+            color: #ff7043; /* orange */
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<h1>Add a New Car</h1>
+
+<form th:action="@{/save}" th:object="${car}" method="post">
+    <div>
+        <label>License Plate Number</label>
+        <input type="text" th:field="*{licensePlateNumber}" required>
+    </div>
+
+    <div>
+        <label>Make</label>
+        <input type="text" th:field="*{make}" required>
+    </div>
+
+    <div>
+        <label>Model</label>
+        <input type="text" th:field="*{model}" required>
+    </div>
+
+    <div>
+        <label>Year</label>
+        <input type="number" th:field="*{year}" min="1900" max="2100" required>
+    </div>
+
+    <div>
+        <label>Color</label>
+        <input type="text" th:field="*{color}" required>
+    </div>
+
+    <div>
+        <label>Body Type</label>
+        <select th:field="*{bodyType}">
+            <option value="Sedan">Sedan</option>
+            <option value="SUV">SUV</option>
+            <option value="Hatchback">Hatchback</option>
+            <option value="Truck">Truck</option>
+            <option value="Coupe">Coupe</option>
+        </select>
+    </div>
+
+    <div>
+        <label>Engine Type</label>
+        <select th:field="*{engineType}">
+            <option value="Gasoline">Gasoline</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Electric">Electric</option>
+            <option value="Hybrid">Hybrid</option>
+        </select>
+    </div>
+
+    <div>
+        <label>Transmission</label>
+        <select th:field="*{transmission}">
+            <option value="Automatic">Automatic</option>
+            <option value="Manual">Manual</option>
+        </select>
+    </div>
+
+    <button type="submit">Save Car</button>
+</form>
+
+<a th:href="@{/}">⬅ Back to Home</a>
+</body>
+</html>

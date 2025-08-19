@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Car List</title>
+    <meta charset="UTF-8"/>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #ff7043; /* orange */
+            font-weight: 600;
+            font-size: 50px;
+        }
+
+        a {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 8px 16px;
+            background: #009688; /* teal */
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: 0.2s ease;
+        }
+
+        a:hover {
+            background: #00796b; /* darker teal */
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 90%;
+            max-width: 1000px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #ff7043; /* orange */
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f1f1f1;
+        }
+
+        tr:hover {
+            background-color: #e0f2f1; /* light teal */
+        }
+    </style>
+</head>
+<body>
+<h1>Cars Available</h1>
+
+<a th:href="@{/add}">+ Add New Car</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>License Plate</th>
+        <th>Make</th>
+        <th>Model</th>
+        <th>Year</th>
+        <th>Color</th>
+        <th>Body Type</th>
+        <th>Engine Type</th>
+        <th>Transmission</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="car : ${car}">
+        <td th:text="${car.carID}"></td>
+        <td th:text="${car.licensePlateNumber}"></td>
+        <td th:text="${car.make}"></td>
+        <td th:text="${car.model}"></td>
+        <td th:text="${car.year}"></td>
+        <td th:text="${car.color}"></td>
+        <td th:text="${car.bodyType}"></td>
+        <td th:text="${car.engineType}"></td>
+        <td th:text="${car.transmission}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
