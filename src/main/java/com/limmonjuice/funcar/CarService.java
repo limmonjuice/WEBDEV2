@@ -10,7 +10,6 @@ public class CarService {
 
     private static final String FILE_NAME = "cars.csv";
 
-    // --- Helper: Read all cars from CSV ---
     private List<Car> readCars() {
         List<Car> cars = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(FILE_NAME))) {
@@ -30,12 +29,11 @@ public class CarService {
                 cars.add(car);
             }
         } catch (IOException e) {
-            // Ignore if file doesn't exist yet
+
         }
         return cars;
     }
 
-    // --- Helper: Write all cars back to CSV ---
     private void writeCars(List<Car> cars) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME))) {
             for (Car car : cars) {
@@ -56,7 +54,6 @@ public class CarService {
         }
     }
 
-    // --- CRUD (only list & add) ---
     public List<Car> getAllCars() {
         return readCars();
     }
@@ -64,7 +61,6 @@ public class CarService {
     public void addCar(Car car) {
         List<Car> cars = readCars();
 
-        // Auto-increment ID
         long newId = cars.stream()
                 .mapToLong(Car::getCarID)
                 .max()
