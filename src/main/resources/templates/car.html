@@ -298,8 +298,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="car : ${car}">
-                <td th:text="${car.id}"></td>
+            <tr th:each="car, stat : ${car}">
+                <td th:text="${stat.index + 1}"></td> <!-- fluid numbering -->
                 <td th:text="${car.licensePlate}"></td>
                 <td th:text="${car.make}"></td>
                 <td th:text="${car.model}"></td>
