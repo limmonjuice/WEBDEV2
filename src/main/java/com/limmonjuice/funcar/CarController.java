@@ -22,8 +22,8 @@ public class CarController {
     @GetMapping
     public String listCars(Model model) {
         List<Car> cars = carRepository.findAll();
-        model.addAttribute("car", cars);
-        return "car"; // car.html (make sure your template name matches)
+        model.addAttribute("car", cars); // renamed to 'cars' (plural) for clarity
+        return "car"; // car.html (list view)
     }
 
     // Show form to add a car
@@ -33,10 +33,26 @@ public class CarController {
         return "new"; // new.html
     }
 
-    // Handle saving a car
+    // Handle saving a car (new or updated)
     @PostMapping("/save")
     public String saveCar(@ModelAttribute("car") Car car) {
-        carRepository.save(car);
+        carRepository.save(car); // works for insert & update
         return "redirect:/";
+    }
+
+    // Delete car by id
+    @GetMapping("/delete/{id}")
+    public String deleteCar(@PathVariable int id) {
+        carRepository.deleteById(id);
+        return "redirect:/";
+    }
+
+    // Show edit form
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable int id, Model model) {
+        Car car = carRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid car ID: " + id));
+        model.addAttribute("car", car);
+        return "edit"; // edit.html
     }
 }

@@ -26,9 +26,10 @@ public class DbTester implements CommandLineRunner {
             car.setColor("Red");
             car.setBodyType("Sedan");
             car.setEngineType("Gasoline");
+            car.setTransmission("Automatic");
 
             carRepository.save(car);
-            System.out.println("✅ Sample car saved successfully!");
+            System.out.println("Sample car saved successfully!");
         }
 
         // Retrieve and print all cars
@@ -42,7 +43,8 @@ public class DbTester implements CommandLineRunner {
                             " | Year: " + carRow.getYear() +
                             " | Color: " + carRow.getColor() +
                             " | Body: " + carRow.getBodyType() +
-                            " | Engine: " + carRow.getEngineType()
+                            " | Engine: " + carRow.getEngineType() +
+                            " | Transmission: " + carRow.getTransmission()
             );
         });
 

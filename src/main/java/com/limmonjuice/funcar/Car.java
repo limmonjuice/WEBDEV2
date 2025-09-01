@@ -56,6 +56,11 @@ public class Car {
     private String bodyType;
     private String engineType;
     private String licensePlate;
+    private String transmission;
+
+    public String getTransmission() {return transmission;}
+
+    public void setTransmission(String transmission) { this.transmission = transmission;}
 
     public int getId() {
         return id;

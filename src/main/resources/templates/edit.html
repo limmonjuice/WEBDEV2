@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add Car</title>
+    <title>Edit Car</title>
     <style>
         * {
             box-sizing: border-box;
@@ -49,7 +49,7 @@
                     0 0 0 1px rgba(255, 255, 255, 0.2);
         }
 
-        h1 {
+        h2 {
             margin: 0 0 32px 0;
             color: #ff7043;
             font-weight: 700;
@@ -117,6 +117,16 @@
             appearance: none;
         }
 
+        input[type="hidden"] {
+            display: none;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
         .btn {
             display: inline-flex;
             align-items: center;
@@ -125,14 +135,13 @@
             border-radius: 12px;
             font-weight: 700;
             font-size: 16px;
-            color: white;
             text-decoration: none;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: none;
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            margin-top: 8px;
+            flex: 1;
         }
 
         .btn::before {
@@ -151,35 +160,26 @@
             opacity: 1;
         }
 
-        .btn-submit {
+        .btn-update {
             background: linear-gradient(135deg, #009688, #00796b);
+            color: white;
             box-shadow: 0 4px 12px rgba(0, 150, 136, 0.3);
         }
 
-        .btn-submit:hover {
+        .btn-update:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0, 150, 136, 0.4);
         }
 
-        .back-link {
-            margin-top: 24px;
-            text-align: center;
+        .btn-cancel {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
         }
 
-        .back-link a {
-            color: #ff7043;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .back-link a:hover {
-            color: #ff8a65;
-            text-decoration: underline;
+        .btn-cancel:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(100, 116, 139, 0.4);
         }
 
         /* Responsive Design */
@@ -193,7 +193,7 @@
                 border-radius: 16px;
             }
 
-            h1 {
+            h2 {
                 font-size: 2rem;
                 margin-bottom: 24px;
             }
@@ -207,9 +207,13 @@
                 font-size: 15px;
             }
 
-            .btn-submit {
+            .btn {
                 padding: 14px 28px;
                 font-size: 15px;
+            }
+
+            .button-group {
+                flex-direction: column;
             }
         }
 
@@ -227,37 +231,40 @@
 </head>
 <body>
 <div class="container">
-    <h1>Add a New Car</h1>
+    <h2>Edit Car</h2>
 
     <form th:action="@{/save}" th:object="${car}" method="post">
+        <!-- Hidden ID field -->
+        <input type="hidden" th:field="*{id}"/>
+
         <div class="form-group">
-            <label>License Plate Number</label>
-            <input type="text" th:field="*{licensePlate}" required>
+            <label for="licensePlate">License Plate Number</label>
+            <input type="text" id="licensePlate" th:field="*{licensePlate}" required>
         </div>
 
         <div class="form-group">
-            <label>Make</label>
-            <input type="text" th:field="*{make}" required>
+            <label for="make">Make</label>
+            <input type="text" id="make" th:field="*{make}" required>
         </div>
 
         <div class="form-group">
-            <label>Model</label>
-            <input type="text" th:field="*{model}" required>
+            <label for="model">Model</label>
+            <input type="text" id="model" th:field="*{model}" required>
         </div>
 
         <div class="form-group">
-            <label>Year</label>
-            <input type="number" th:field="*{year}" min="1900" max="2100" required>
+            <label for="year">Year</label>
+            <input type="number" id="year" th:field="*{year}" min="1900" max="2100" required>
         </div>
 
         <div class="form-group">
-            <label>Color</label>
-            <input type="text" th:field="*{color}" required>
+            <label for="color">Color</label>
+            <input type="text" id="color" th:field="*{color}" required>
         </div>
 
         <div class="form-group">
-            <label>Body Type</label>
-            <select th:field="*{bodyType}">
+            <label for="bodyType">Body Type</label>
+            <select id="bodyType" th:field="*{bodyType}">
                 <option value="Sedan">Sedan</option>
                 <option value="SUV">SUV</option>
                 <option value="Hatchback">Hatchback</option>
@@ -267,8 +274,8 @@
         </div>
 
         <div class="form-group">
-            <label>Engine Type</label>
-            <select th:field="*{engineType}">
+            <label for="engineType">Engine Type</label>
+            <select id="engineType" th:field="*{engineType}">
                 <option value="Gasoline">Gasoline</option>
                 <option value="Diesel">Diesel</option>
                 <option value="Electric">Electric</option>
@@ -277,19 +284,18 @@
         </div>
 
         <div class="form-group">
-            <label>Transmission</label>
-            <select th:field="*{transmission}">
+            <label for="transmission">Transmission</label>
+            <select id="transmission" th:field="*{transmission}">
                 <option value="Automatic">Automatic</option>
                 <option value="Manual">Manual</option>
             </select>
         </div>
 
-        <button type="submit" class="btn btn-submit">Save Car</button>
+        <div class="button-group">
+            <button type="submit" class="btn btn-update">Update Car</button>
+            <a th:href="@{/}" class="btn btn-cancel">Cancel</a>
+        </div>
     </form>
-
-    <div class="back-link">
-        <a th:href="@{/}">⬅ Back to Home</a>
-    </div>
 </div>
 </body>
 </html>
