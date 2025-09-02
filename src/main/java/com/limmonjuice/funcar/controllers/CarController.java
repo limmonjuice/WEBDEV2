@@ -1,5 +1,7 @@
-package com.limmonjuice.funcar;
+package com.limmonjuice.funcar.controllers;
 
+import com.limmonjuice.funcar.repositories.CarRepo;
+import com.limmonjuice.funcar.models.Car;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -40,7 +40,7 @@
 //    public void setTransmission(String transmission) { this.transmission = transmission; }
 //}
 
-package com.limmonjuice.funcar;
+package com.limmonjuice.funcar.models;
 
 import jakarta.persistence.*;
 

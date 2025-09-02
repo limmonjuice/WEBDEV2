@@ -1,5 +1,7 @@
-package com.limmonjuice.funcar;
+package com.limmonjuice.funcar.utils;
 
+import com.limmonjuice.funcar.models.Car;
+import com.limmonjuice.funcar.repositories.CarRepo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +17,7 @@ public class DbTester implements CommandLineRunner {
     @Override
     public void run(String... args) {
         System.out.println("Starting DB Test...");
+
 
         // Create a sample car only if database is empty
         if (carRepository.count() == 0) {
