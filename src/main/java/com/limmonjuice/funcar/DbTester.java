@@ -19,11 +19,11 @@ public class DbTester implements CommandLineRunner {
         // Create a sample car only if database is empty
         if (carRepository.count() == 0) {
             Car car = new Car();
-            car.setLicensePlate("ABC-1234");
-            car.setMake("Honda");
-            car.setModel("Civic");
-            car.setYear(2025);
-            car.setColor("Red");
+            car.setLicensePlate("ABI-2207");
+            car.setMake("Toyota");
+            car.setModel("Vios");
+            car.setYear(2019);
+            car.setColor("Gray");
             car.setBodyType("Sedan");
             car.setEngineType("Gasoline");
             car.setTransmission("Automatic");
