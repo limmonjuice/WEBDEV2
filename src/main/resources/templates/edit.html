@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Car</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #ff7043 0%, #009688 100%);
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                    radial-gradient(circle at 20% 50%, rgba(255, 112, 67, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(0, 150, 136, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 40% 80%, rgba(66, 165, 245, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 700px;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow:
+                    0 20px 40px rgba(0, 0, 0, 0.1),
+                    0 0 0 1px rgba(255, 255, 255, 0.2);
+        }
+
+        h2 {
+            margin: 0 0 32px 0;
+            color: #ff7043;
+            font-weight: 700;
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            text-align: center;
+            background: linear-gradient(135deg, #ff7043, #ff8a65);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(255, 112, 67, 0.3);
+            letter-spacing: -0.02em;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #475569;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input, select {
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            background: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #475569;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #009688;
+            box-shadow:
+                    0 0 0 3px rgba(0, 150, 136, 0.1),
+                    0 4px 12px rgba(0, 150, 136, 0.15);
+            transform: translateY(-1px);
+        }
+
+        input:hover, select:hover {
+            border-color: #cbd5e1;
+        }
+
+        select {
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+            padding-right: 40px;
+            appearance: none;
+        }
+
+        input[type="hidden"] {
+            display: none;
+        }
+
+        /* Error messages */
+        .error {
+            color: #e63946;
+            font-size: 14px;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn:hover::before {
+            opacity: 1;
+        }
+
+        .btn-update {
+            background: linear-gradient(135deg, #009688, #00796b);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 150, 136, 0.3);
+        }
+
+        .btn-update:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 150, 136, 0.4);
+        }
+
+        .btn-cancel {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-cancel:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(100, 116, 139, 0.4);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Edit Car</h2>
+
+    <form th:action="@{/save}" th:object="${car}" method="post">
+        <!-- Hidden ID field -->
+        <input type="hidden" th:field="*{id}"/>
+
+        <div class="form-group">
+            <label for="licensePlate">License Plate Number</label>
+            <input type="text" id="licensePlate" th:field="*{licensePlate}" >
+            <span class="error" th:if="${#fields.hasErrors('licensePlate')}" th:errors="*{licensePlate}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="make">Make</label>
+            <input type="text" id="make" th:field="*{make}" >
+            <span class="error" th:if="${#fields.hasErrors('make')}" th:errors="*{make}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="model">Model</label>
+            <input type="text" id="model" th:field="*{model}" >
+            <span class="error" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="year">Year</label>
+            <input type="number" id="year" th:field="*{year}" >
+            <span class="error" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="color">Color</label>
+            <input type="text" id="color" th:field="*{color}" >
+            <span class="error" th:if="${#fields.hasErrors('color')}" th:errors="*{color}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="bodyType">Body Type</label>
+            <select id="bodyType" th:field="*{bodyType}">
+                <option value="Sedan">Sedan</option>
+                <option value="SUV">SUV</option>
+                <option value="Hatchback">Hatchback</option>
+                <option value="Truck">Truck</option>
+                <option value="Coupe">Coupe</option>
+            </select>
+            <span class="error" th:if="${#fields.hasErrors('bodyType')}" th:errors="*{bodyType}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="engineType">Engine Type</label>
+            <select id="engineType" th:field="*{engineType}">
+                <option value="Gasoline">Gasoline</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Electric">Electric</option>
+                <option value="Hybrid">Hybrid</option>
+            </select>
+            <span class="error" th:if="${#fields.hasErrors('engineType')}" th:errors="*{engineType}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="transmission">Transmission</label>
+            <select id="transmission" th:field="*{transmission}">
+                <option value="Automatic">Automatic</option>
+                <option value="Manual">Manual</option>
+            </select>
+            <span class="error" th:if="${#fields.hasErrors('transmission')}" th:errors="*{transmission}"></span>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="btn btn-update">Update Car</button>
+            <a th:href="@{/}" class="btn btn-cancel">Cancel</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
