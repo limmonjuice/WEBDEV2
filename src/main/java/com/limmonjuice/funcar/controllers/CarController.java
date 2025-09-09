@@ -23,35 +23,30 @@ public class CarController {
         this.carRepository = carRepository;
     }
 
-    // Show all cars
     @GetMapping
     public String listCars(Model model) {
         List<Car> cars = carRepository.findAll();
-        model.addAttribute("cars", cars); // use plural name for clarity
-        return "car"; // car.html (list view)
+        model.addAttribute("cars", cars);
+        return "car"; // car.html
     }
 
-    // Show form to add a car
     @GetMapping("/add")
     public String showAddForm(Model model) {
-        model.addAttribute("car", new CarDTO()); // ✅ use CarDTO, not Car
+        model.addAttribute("car", new CarDTO());
         return "new"; // new.html
     }
 
-    // Handle saving a new car
     @PostMapping("/save")
     public String saveCar(
             @Valid @ModelAttribute("car") CarDTO carDTO,
-            BindingResult result,
-            Model model) {
+            BindingResult result) {
 
-        // If validation fails, stay on the form
         if (result.hasErrors()) {
-            return "new"; // ✅ Keep user input + error messages
+            return "new";
         }
 
-        // Convert DTO → Entity
         Car newCar = new Car();
+        newCar.setId(carDTO.getId());
         newCar.setLicensePlate(carDTO.getLicensePlate());
         newCar.setMake(carDTO.getMake());
         newCar.setModel(carDTO.getModel());
@@ -66,21 +61,17 @@ public class CarController {
         return "redirect:/";
     }
 
-    // Delete car by ID
-    @GetMapping("/delete/{id}")
-    public String deleteCar(@PathVariable int id) {
-        carRepository.deleteById(id);
-        return "redirect:/";
-    }
-
-    // Show edit form
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable int id, Model model) {
-        Car car = carRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid car ID: " + id));
+        Car car = carRepository.findById(id).orElse(null);
 
-        // Convert Car → CarDTO for form binding
+        if (car == null) {
+            model.addAttribute("message", "Sorry, we couldn't find the car you're looking for!");
+            return "error/error";
+        }
+
         CarDTO carDTO = new CarDTO();
+        carDTO.setId(car.getId());
         carDTO.setLicensePlate(car.getLicensePlate());
         carDTO.setMake(car.getMake());
         carDTO.setModel(car.getModel());
@@ -91,6 +82,38 @@ public class CarController {
         carDTO.setTransmission(car.getTransmission());
 
         model.addAttribute("car", carDTO);
-        return "edit"; // edit.html
+        return "edit";
+    }
+
+    @PostMapping("/update")
+    public String updateCar(
+            @Valid @ModelAttribute("car") CarDTO carDTO,
+            BindingResult result) {
+
+        if (result.hasErrors()) {
+            return "edit";
+        }
+
+        Car existingCar = carRepository.findById(carDTO.getId())
+                .orElseThrow(() -> new RuntimeException("Car not found"));
+
+        existingCar.setLicensePlate(carDTO.getLicensePlate());
+        existingCar.setMake(carDTO.getMake());
+        existingCar.setModel(carDTO.getModel());
+        existingCar.setYear(carDTO.getYear());
+        existingCar.setColor(carDTO.getColor());
+        existingCar.setBodyType(carDTO.getBodyType());
+        existingCar.setEngineType(carDTO.getEngineType());
+        existingCar.setTransmission(carDTO.getTransmission());
+
+        carRepository.save(existingCar);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteCar(@PathVariable int id) {
+        carRepository.deleteById(id);
+        return "redirect:/";
     }
 }

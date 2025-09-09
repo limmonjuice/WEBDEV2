@@ -4,10 +4,9 @@ import jakarta.validation.constraints.*;
 
 public class CarDTO {
 
-    private int id; // <-- ADD THIS FIELD
+    private int id;
 
     @NotBlank(message = "License plate is required")
-    @Size(min = 5, max = 10, message = "License plate must be between 5 and 10 characters")
     private String licensePlate;
 
     @NotBlank(message = "Make is required")

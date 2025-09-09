@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Error</title>
+    <title>Something Went Wrong</title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -58,6 +58,11 @@
             text-shadow: 0 2px 4px rgba(239, 83, 80, 0.3);
         }
 
+        .emoji {
+            font-size: 4rem;
+            margin-bottom: 16px;
+        }
+
         p {
             color: #475569;
             font-size: 1.1rem;
@@ -108,8 +113,9 @@
 </head>
 <body>
 <div class="error-container">
-    <h1>Oops! Something Went Wrong</h1>
-    <p th:text="${message}">An unexpected error occurred. Please try again later.</p>
+    <div class="emoji">😕</div>
+    <h1>Sorry about that! <br>We hit a little snag.</h1>
+    <p th:text="${message}">Oops! Something Went Wrong! Please refresh the page or come back later.</p>
     <a th:href="@{/}" class="btn-back">⬅ Back to Home</a>
 </div>
 </body>

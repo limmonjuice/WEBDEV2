@@ -72,6 +72,7 @@
         .form-group {
             display: flex;
             flex-direction: column;
+            position: relative;
         }
 
         label {
@@ -94,6 +95,14 @@
             color: #475569;
         }
 
+        /* Error state styling for inputs */
+        .form-group.has-error input,
+        .form-group.has-error select {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+            background-color: #fef2f2;
+        }
+
         input:focus, select:focus {
             outline: none;
             border-color: #009688;
@@ -103,8 +112,22 @@
             transform: translateY(-1px);
         }
 
+        /* Override focus styles for error state */
+        .form-group.has-error input:focus,
+        .form-group.has-error select:focus {
+            border-color: #ef4444;
+            box-shadow:
+                    0 0 0 3px rgba(239, 68, 68, 0.15),
+                    0 4px 12px rgba(239, 68, 68, 0.2);
+        }
+
         input:hover, select:hover {
             border-color: #cbd5e1;
+        }
+
+        .form-group.has-error input:hover,
+        .form-group.has-error select:hover {
+            border-color: #ef4444;
         }
 
         select {
@@ -115,6 +138,14 @@
             background-size: 16px;
             padding-right: 40px;
             appearance: none;
+        }
+
+        /* Error message styling */
+        .error-message {
+            margin-top: 6px;
+            color: #ef4444;
+            font-size: 14px;
+            font-weight: 500;
         }
 
         .btn {
@@ -211,6 +242,11 @@
                 padding: 14px 28px;
                 font-size: 15px;
             }
+
+            .error-message {
+                padding: 10px 14px;
+                font-size: 13px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -222,6 +258,11 @@
                 padding: 10px 12px;
                 font-size: 14px;
             }
+
+            .error-message {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
         }
     </style>
 </head>
@@ -230,37 +271,47 @@
     <h1>Add a New Car</h1>
 
     <form th:action="@{/save}" th:object="${car}" method="post">
-        <div class="form-group">
+        <div class="form-group" th:classappend="${#fields.hasErrors('licensePlate')} ? 'has-error' : ''">
             <label>License Plate Number</label>
             <input type="text" th:field="*{licensePlate}">
-            <p th:if="${#fields.hasErrors('licensePlate')}" th:errors="*{licensePlate}" style="color:red; font-size:14px;"></p>
+            <div th:if="${#fields.hasErrors('licensePlate')}" class="error-message">
+                <span th:errors="*{licensePlate}"></span>
+            </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" th:classappend="${#fields.hasErrors('make')} ? 'has-error' : ''">
             <label>Make</label>
             <input type="text" th:field="*{make}">
-            <p th:if="${#fields.hasErrors('make')}" th:errors="*{make}" style="color:red; font-size:14px;"></p>
+            <div th:if="${#fields.hasErrors('make')}" class="error-message">
+                <span th:errors="*{make}"></span>
+            </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" th:classappend="${#fields.hasErrors('model')} ? 'has-error' : ''">
             <label>Model</label>
             <input type="text" th:field="*{model}">
-            <p th:if="${#fields.hasErrors('model')}" th:errors="*{model}" style="color:red; font-size:14px;"></p>
+            <div th:if="${#fields.hasErrors('model')}" class="error-message">
+                <span th:errors="*{model}"></span>
+            </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" th:classappend="${#fields.hasErrors('year')} ? 'has-error' : ''">
             <label>Year</label>
             <input type="number" th:field="*{year}">
-            <p th:if="${#fields.hasErrors('year')}" th:errors="*{year}" style="color:red; font-size:14px;"></p>
+            <div th:if="${#fields.hasErrors('year')}" class="error-message">
+                <span th:errors="*{year}"></span>
+            </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" th:classappend="${#fields.hasErrors('color')} ? 'has-error' : ''">
             <label>Color</label>
             <input type="text" th:field="*{color}">
-            <p th:if="${#fields.hasErrors('color')}" th:errors="*{color}" style="color:red; font-size:14px;"></p>
+            <div th:if="${#fields.hasErrors('color')}" class="error-message">
+                <span th:errors="*{color}"></span>
+            </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" th:classappend="${#fields.hasErrors('bodyType')} ? 'has-error' : ''">
             <label>Body Type</label>
             <select th:field="*{bodyType}">
                 <option value="">Select</option>
@@ -270,10 +321,12 @@
                 <option value="Truck">Truck</option>
                 <option value="Coupe">Coupe</option>
             </select>
-            <p th:if="${#fields.hasErrors('bodyType')}" th:errors="*{bodyType}" style="color:red; font-size:14px;"></p>
+            <div th:if="${#fields.hasErrors('bodyType')}" class="error-message">
+                <span th:errors="*{bodyType}"></span>
+            </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" th:classappend="${#fields.hasErrors('engineType')} ? 'has-error' : ''">
             <label>Engine Type</label>
             <select th:field="*{engineType}">
                 <option value="">Select</option>
@@ -282,17 +335,21 @@
                 <option value="Electric">Electric</option>
                 <option value="Hybrid">Hybrid</option>
             </select>
-            <p th:if="${#fields.hasErrors('engineType')}" th:errors="*{engineType}" style="color:red; font-size:14px;"></p>
+            <div th:if="${#fields.hasErrors('engineType')}" class="error-message">
+                <span th:errors="*{engineType}"></span>
+            </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" th:classappend="${#fields.hasErrors('transmission')} ? 'has-error' : ''">
             <label>Transmission</label>
             <select th:field="*{transmission}">
                 <option value="">Select</option>
                 <option value="Automatic">Automatic</option>
                 <option value="Manual">Manual</option>
             </select>
-            <p th:if="${#fields.hasErrors('transmission')}" th:errors="*{transmission}" style="color:red; font-size:14px;"></p>
+            <div th:if="${#fields.hasErrors('transmission')}" class="error-message">
+                <span th:errors="*{transmission}"></span>
+            </div>
         </div>
 
         <button type="submit" class="btn btn-submit">Save Car</button>
