@@ -1,6 +1,8 @@
 package com.limmonjuice.funcar.controllers;
 
 import com.limmonjuice.funcar.services.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +20,16 @@ public class AuthController {
 
     @GetMapping("/login")
     public String login() {
-        return "login"; // login.html
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // If the user is authenticated (and not anonymous), redirect to home
+        if (authentication != null
+                && authentication.isAuthenticated()
+                && !(authentication.getPrincipal() instanceof String)) {
+            return "redirect:/";
+        }
+
+        return "login"; // Show login page if not authenticated
     }
 
     @GetMapping("/register")
