@@ -1,50 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Employee List</title>
+    <title>Something Went Wrong</title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<div class="container">
-    <h1>CEmployees</h1>
-
-    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;">
-        <a th:href="@{/add}" class="btn btn-add">+ Add New Car</a>
-        <form th:action="@{/logout}" method="post" style="display:inline;">
-            <button type="submit" class="btn btn-logout">Logout</button>
-        </form>
-    </div>
-
-    <div class="table-container">
-        <table>
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="employee: ${employees}">
-                <td th:text="${car.id}"></td>
-                <td th:text="${car.licensePlate}"></td>
-                <td th:text="${car.make}"></td>
-                <td th:text="${car.model}"></td>
-                <td th:text="${car.year}"></td>
-                <td th:text="${car.color}"></td>
-                <td th:text="${car.bodyType}"></td>
-                <td th:text="${car.engineType}"></td>
-                <td th:text="${car.transmission}"></td>
-                <td class="actions-cell">
-                    <a th:href="@{/edit/{id}(id=${car.id})}" class="btn btn-edit">Edit</a>
-                    <a th:href="@{/delete/{id}(id=${car.id})}" class="btn btn-delete">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+<div class="error-container">
+    <div class="emoji">😕</div>
+    <h1>Sorry about that! <br>We hit a little snag.</h1>
+    <p th:text="${message}">Oops! Something Went Wrong! Please refresh the page or come back later.</p>
+    <a th:href="@{/}" class="btn-back">⬅ Back to Home</a>
 </div>
 </body>
 </html>

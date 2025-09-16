@@ -23,78 +23,93 @@ public class EmployeeController {
         this.employeeRepository = employeeRepository;
     }
 
+    // Show all employees
     @GetMapping
-    public String listCars(Model model) {
+    public String listEmployees(Model model) {
         List<Employee> employees = employeeRepository.findAll();
-        model.addAttribute("employee", employees);
-        return "employee"; // car.html
+        model.addAttribute("employees", employees);
+        return "employee"; // employee.html
     }
 
+    // Show add form
     @GetMapping("/add")
     public String showAddForm(Model model) {
-        model.addAttribute("employess", new EmployeeDTO());
+        model.addAttribute("employee", new EmployeeDTO());
         return "new"; // new.html
     }
 
+    // Handle create
     @PostMapping("/save")
-    public String saveCar(
+    public String saveEmployee(
             @Valid @ModelAttribute("employee") EmployeeDTO employeeDTO,
-            BindingResult result) {
+            BindingResult result,
+            Model model) {
 
         if (result.hasErrors()) {
+            System.out.println("Validation errors: " + result.getAllErrors());
+            model.addAttribute("employee", employeeDTO);
             return "new";
         }
 
         Employee newEmployee = new Employee();
-        newEmployee.setId(employeeDTO.getId());
         newEmployee.setName(employeeDTO.getName());
         newEmployee.setEmail(employeeDTO.getEmail());
 
         employeeRepository.save(newEmployee);
-
         return "redirect:/";
     }
 
+    // Show edit form
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable int id, Model model) {
         Employee employee = employeeRepository.findById(id).orElse(null);
 
         if (employee == null) {
-            model.addAttribute("message", "Sorry, we couldn't find the car you're looking for!");
+            model.addAttribute("message", "Sorry, we couldn't find the employee you're looking for!");
             return "error/error";
         }
 
         EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setId(employee.getId());
         employeeDTO.setName(employee.getName());
         employeeDTO.setEmail(employee.getEmail());
 
         model.addAttribute("employee", employeeDTO);
+        model.addAttribute("id", id); // Pass id separately for update
         return "edit";
     }
 
-    @PostMapping("/update")
-    public String updateCar(
+    // Handle update
+    @PostMapping("/update/{id}")
+    public String updateEmployee(
+            @PathVariable int id,
             @Valid @ModelAttribute("employee") EmployeeDTO employeeDTO,
-            BindingResult result) {
+            BindingResult result,
+            Model model) {
 
         if (result.hasErrors()) {
-            return "edit";
+            // 👇 Paste here
+            System.out.println("Validation errors: " + result.getAllErrors());
+            model.addAttribute("id", id);
+            return "edit"; // go back to edit.html
         }
 
-        Employee existingEmployee = employeeRepository.findById(employeeDTO.getId())
-                .orElseThrow(() -> new RuntimeException("EMployee not found"));
+        Employee existingEmployee = employeeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
 
         existingEmployee.setName(employeeDTO.getName());
         existingEmployee.setEmail(employeeDTO.getEmail());
 
         employeeRepository.save(existingEmployee);
-
         return "redirect:/";
     }
 
+    // Handle delete
     @GetMapping("/delete/{id}")
-    public String deleteCar(@PathVariable int id) {
+    public String deleteEmployee(@PathVariable int id, Model model) {
+        if (!employeeRepository.existsById(id)) {
+            model.addAttribute("message", "Employee not found!");
+            return "error/error";
+        }
         employeeRepository.deleteById(id);
         return "redirect:/";
     }
