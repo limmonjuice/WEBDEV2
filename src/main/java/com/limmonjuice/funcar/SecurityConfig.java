@@ -33,7 +33,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/register").permitAll()
+                        .requestMatchers("register").permitAll()
                         .requestMatchers("/login").anonymous() // 🚀 only for non-authenticated users
                         .anyRequest().authenticated()
                 )

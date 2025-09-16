@@ -114,6 +114,11 @@
         transition: color 0.3s ease;
     }
 
+    .login-link .underline {
+        text-decoration: underline;
+        font-weight: 600;
+    }
+
     .login-link:hover {
          color: #00796b;
     }
@@ -144,7 +149,9 @@
     </div>
     <button type="submit">Register</button>
   </form>
-  <a th:href="@{/login}" class="login-link">Already have an account? Login</a>
+    <a th:href="@{/login}" class="login-link">
+        Already have an account? <span class="underline">Login</span>
+    </a>
 </div>
 </body>
 </html>
