@@ -87,11 +87,11 @@ public class EmployeeController {
             BindingResult result,
             Model model) {
 
-        if(employeeRepository.findByEmail(employeeDTO.getEmail()).isPresent()){
-            result.rejectValue("email", "error.employee", "Email already exists");
-            model.addAttribute("employee", employeeDTO);
-            return "edit";
-        }
+        employeeRepository.findByEmail(employeeDTO.getEmail()).ifPresent(existing -> {
+            if (existing.getId() != id) {
+                result.rejectValue("email", "error.employee", "Email already exists");
+            }
+        });
 
         if (result.hasErrors()) {
             model.addAttribute("employee", employeeDTO);
