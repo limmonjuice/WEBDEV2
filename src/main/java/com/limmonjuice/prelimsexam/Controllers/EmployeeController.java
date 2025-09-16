@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @Controller
 @RequestMapping("/")
 public class EmployeeController {
@@ -41,13 +42,17 @@ public class EmployeeController {
     // Handle create
     @PostMapping("/save")
     public String saveEmployee(
-            @Valid @ModelAttribute("employee") EmployeeDTO employeeDTO,
+            @ModelAttribute("employee") @Valid EmployeeDTO employeeDTO,
             BindingResult result,
             Model model) {
 
         if (result.hasErrors()) {
-            System.out.println("Validation errors: " + result.getAllErrors());
             model.addAttribute("employee", employeeDTO);
+            return "new";
+        }
+
+        if(employeeRepository.findByEmail(employeeDTO.getEmail()).isPresent()){
+            result.rejectValue("email","error:employee", "email.exists");
             return "new";
         }
 
