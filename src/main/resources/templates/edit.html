@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Employee</title>
+    <link rel="stylesheet" th:href="@{/css/employee_styles.css}">
 </head>
 <body>
 <div class="container">
     <h2>Edit Employee</h2>
-
-    <!-- ✅ Corrected action: calls /update/{id} instead of /save -->
     <form th:action="@{/update/{id}(id=${id})}" th:object="${employee}" method="post">
 
         <div>

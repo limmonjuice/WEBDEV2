@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Employee</title>
+    <link rel="stylesheet" th:href="@{/css/new_styles.css}">
 </head>
 <body>
 <div class="container">
     <h2>Add Employee</h2>
 
-    <!-- ✅ This form is correct for create (uses /save) -->
     <form th:action="@{/save}" th:object="${employee}" method="post">
 
         <div class="form-group">
