@@ -52,7 +52,7 @@ public class EmployeeController {
         }
 
         if(employeeRepository.findByEmail(employeeDTO.getEmail()).isPresent()){
-            result.rejectValue("email","error.employees", "email.exists");
+            result.rejectValue("email","error:employee", "email.exists");
             return "new";
         }
 
