@@ -52,7 +52,7 @@ public class EmployeeController {
         }
 
         if(employeeRepository.findByEmail(employeeDTO.getEmail()).isPresent()){
-            result.rejectValue("email","error:employee", "email.exists");
+            result.rejectValue("email", "error.employee", "Email already exists");
             return "new";
         }
 
@@ -92,8 +92,6 @@ public class EmployeeController {
             Model model) {
 
         if (result.hasErrors()) {
-            // 👇 Paste here
-            System.out.println("Validation errors: " + result.getAllErrors());
             model.addAttribute("id", id);
             return "edit"; // go back to edit.html
         }
