@@ -6,9 +6,6 @@ import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-@Table(name = "employee", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email")
-})
 public class EmployeeDTO {
 
     @NotBlank(message = "Name is mandatory")
@@ -18,7 +15,6 @@ public class EmployeeDTO {
     @Email(message = "Email format only")
     private String email;
 
-    // Getters and Setters
     public String getEmail() {
         return email;
     }

@@ -9,7 +9,7 @@
 <div class="container">
     <h2>Add Employee</h2>
 
-    <form th:action="@{/save}" th:object="${employee}" method="post">
+    <form th:action="@{/save}" th:object="${employee}" method="post" novalidate>
 
         <div class="form-group">
             <label for="name">Name</label>

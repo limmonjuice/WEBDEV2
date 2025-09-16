@@ -24,7 +24,6 @@ public class EmployeeController {
         this.employeeRepository = employeeRepository;
     }
 
-    // Show all employees
     @GetMapping
     public String listEmployees(Model model) {
         List<Employee> employees = employeeRepository.findAll();
@@ -32,14 +31,12 @@ public class EmployeeController {
         return "employee"; // employee.html
     }
 
-    // Show add form
     @GetMapping("/add")
     public String showAddForm(Model model) {
         model.addAttribute("employee", new EmployeeDTO());
         return "new"; // new.html
     }
 
-    // Handle create
     @PostMapping("/save")
     public String saveEmployee(
             @ModelAttribute("employee") @Valid EmployeeDTO employeeDTO,
@@ -52,7 +49,8 @@ public class EmployeeController {
         }
 
         if(employeeRepository.findByEmail(employeeDTO.getEmail()).isPresent()){
-            result.rejectValue("email","error:employee", "email.exists");
+            result.rejectValue("email", "error.employee", "Email already exists");
+            model.addAttribute("employee", employeeDTO);
             return "new";
         }
 
@@ -64,7 +62,6 @@ public class EmployeeController {
         return "redirect:/";
     }
 
-    // Show edit form
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable int id, Model model) {
         Employee employee = employeeRepository.findById(id).orElse(null);
@@ -79,11 +76,10 @@ public class EmployeeController {
         employeeDTO.setEmail(employee.getEmail());
 
         model.addAttribute("employee", employeeDTO);
-        model.addAttribute("id", id); // Pass id separately for update
+        model.addAttribute("id", id);
         return "edit";
     }
 
-    // Handle update
     @PostMapping("/update/{id}")
     public String updateEmployee(
             @PathVariable int id,
@@ -91,11 +87,16 @@ public class EmployeeController {
             BindingResult result,
             Model model) {
 
+        if(employeeRepository.findByEmail(employeeDTO.getEmail()).isPresent()){
+            result.rejectValue("email", "error.employee", "Email already exists");
+            model.addAttribute("employee", employeeDTO);
+            return "edit";
+        }
+
         if (result.hasErrors()) {
-            // 👇 Paste here
-            System.out.println("Validation errors: " + result.getAllErrors());
+            model.addAttribute("employee", employeeDTO);
             model.addAttribute("id", id);
-            return "edit"; // go back to edit.html
+            return "edit";
         }
 
         Employee existingEmployee = employeeRepository.findById(id)
@@ -108,7 +109,6 @@ public class EmployeeController {
         return "redirect:/";
     }
 
-    // Handle delete
     @GetMapping("/delete/{id}")
     public String deleteEmployee(@PathVariable int id, Model model) {
         if (!employeeRepository.existsById(id)) {

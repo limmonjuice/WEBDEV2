@@ -19,7 +19,7 @@ public class Employee {
     @Column(unique = true)
     private String email;
 
-    // Getters and Setters
+
     public String getEmail() {
         return email;
     }

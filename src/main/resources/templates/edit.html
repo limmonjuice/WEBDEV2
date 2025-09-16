@@ -8,7 +8,7 @@
 <body>
 <div class="container">
     <h2>Edit Employee</h2>
-    <form th:action="@{/update/{id}(id=${id})}" th:object="${employee}" method="post">
+    <form th:action="@{/update/{id}(id=${id})}" th:object="${employee}" method="post" novalidate>
 
         <div>
             <label>Name</label>
