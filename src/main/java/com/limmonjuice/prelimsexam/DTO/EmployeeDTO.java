@@ -6,9 +6,7 @@ import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-@Table(name = "employee", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email")
-})
+
 public class EmployeeDTO {
 
     @NotBlank(message = "Name is mandatory")

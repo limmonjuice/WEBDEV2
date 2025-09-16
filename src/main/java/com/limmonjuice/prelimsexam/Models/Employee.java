@@ -3,7 +3,9 @@ package com.limmonjuice.prelimsexam.Models;
 import jakarta.persistence.*;
 
 @Entity
-
+@Table(name = "employee", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "email")
+})
 public class Employee {
 
     @Id
