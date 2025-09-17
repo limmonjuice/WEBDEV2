@@ -123,3 +123,72 @@ button:active {
     color: #7d9465;
     text-decoration: underline;
 }
+
+/* Form actions (Update + Cancel) */
+.form-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 15px auto 0 auto;
+    width: 100%;
+    text-align: center;
+}
+
+/* Reset all default styles and apply consistent base styles */
+.form-actions button,
+.form-actions .cancel-button {
+    /* Reset all browser defaults */
+    all: unset;
+
+    /* Apply exact same properties */
+    width: 140px;
+    height: 48px; /* Fixed height instead of relying on padding */
+    background-color: #8ba476; /* Default color */
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+/* Update button specific color */
+.form-actions button {
+    background-color: #8ba476;
+}
+
+.form-actions button:hover {
+    background-color: #7d9465;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(125, 148, 101, 0.3);
+}
+
+.form-actions button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(125, 148, 101, 0.3);
+}
+
+/* Cancel button specific color */
+.form-actions .cancel-button {
+    background-color: #b85450;
+}
+
+.form-actions .cancel-button:hover {
+    background-color: #a04845;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(176, 84, 80, 0.3);
+}
+
+.form-actions .cancel-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(176, 84, 80, 0.3);
+}
