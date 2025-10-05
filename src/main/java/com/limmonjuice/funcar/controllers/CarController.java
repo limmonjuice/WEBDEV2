@@ -3,6 +3,7 @@ package com.limmonjuice.funcar.controllers;
 import com.limmonjuice.funcar.DTO.CarDTO;
 import com.limmonjuice.funcar.models.Car;
 import com.limmonjuice.funcar.repositories.CarRepo;
+import com.limmonjuice.funcar.services.CarService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,11 +17,12 @@ import java.util.List;
 @RequestMapping("/")
 public class CarController {
 
-    private final CarRepo carRepository;
+    private final CarService carService;
+    CarRepo carRepository;
 
-    @Autowired
-    public CarController(CarRepo carRepository) {
+    public CarController(CarRepo carRepository, CarService carService) {
         this.carRepository = carRepository;
+        this.carService = carService;
     }
 
     @GetMapping

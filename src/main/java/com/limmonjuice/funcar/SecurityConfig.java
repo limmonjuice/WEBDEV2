@@ -32,8 +32,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**"))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("register").permitAll()
+                        .requestMatchers("register", "/api/**").permitAll()
                         .requestMatchers("/login").anonymous() // 🚀 only for non-authenticated users
                         .anyRequest().authenticated()
                 )
