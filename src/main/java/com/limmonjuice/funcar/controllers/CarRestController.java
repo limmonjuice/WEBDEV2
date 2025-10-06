@@ -6,7 +6,9 @@ import com.limmonjuice.funcar.models.Car;
 import com.limmonjuice.funcar.repositories.CarRepo;
 import com.limmonjuice.funcar.services.CarService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -32,15 +34,19 @@ public class CarRestController {
         return carService.save(car);
     }
 
-    @PutMapping("cars/{id}")
-    public Car updateCar(@PathVariable int id, @RequestBody CarDTO carDetails) {
-        return carService.save(carDetails);
+    @PutMapping("/cars/{id}")
+    public Car updateCar(@PathVariable int id, @Valid @RequestBody CarDTO car){
+        Car updateCar = carService.findById(id);
+        if (updateCar == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Car with ID "+ id + " not found.");
+        }
+        return carService.updateCar(id, car);
     }
 
-    @DeleteMapping("cars/{id}")
-    public void deleteCar(@PathVariable int id) {
-        if (!carRepository.existsById(id)){
-            throw new ResourceNotFoundException("Car not found",id);
+    @DeleteMapping("/cars/{id}")
+    public void deleteCar(@PathVariable int id){
+        if(carService.findById(id) == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Car with ID "+ id + " not found.");
         }
         carService.deleteCar(id);
     }

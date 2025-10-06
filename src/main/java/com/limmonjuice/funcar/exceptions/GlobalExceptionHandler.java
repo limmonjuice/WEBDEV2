@@ -24,13 +24,4 @@ public class GlobalExceptionHandler {
         model.addAttribute("message", "This page isn't available. Sorry about that.\nTry searching for something else.");
         return "error/error";
     }
-
-    @ExceptionHandler
-    public ResponseEntity<Map<String, String>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex, Model model) {
-        Map<String,String> errors = new HashMap<>();
-        ex.getBindingResult().getFieldErrors().forEach((error) -> {
-            errors.put(error.getField(), error.getDefaultMessage());
-        });
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-    }
 }

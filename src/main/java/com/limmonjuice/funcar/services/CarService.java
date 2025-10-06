@@ -19,6 +19,10 @@ public class CarService {
         return carRepository.findAll();
     }
 
+    public Car findById(int id){
+        return carRepository.findById(id).orElse(null);
+    }
+
     public Car save(CarDTO carDTO) {
         Car newCar = new Car();
         newCar.setId(carDTO.getId());
@@ -35,7 +39,7 @@ public class CarService {
     }
 
     public Car updateCar(int id, CarDTO carDTO){
-        Car existingCar = carRepository.findById(carDTO.getId())
+        Car existingCar = carRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Car not found"));
 
         existingCar.setLicensePlate(carDTO.getLicensePlate());
