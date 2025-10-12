@@ -12,6 +12,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@CrossOrigin(origins = {"http://127.0.0.1:5500", "http://localhost:5500"},
+        allowedHeaders = "*",
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController
 @RequestMapping("/api")
 public class CarRestController {
@@ -27,6 +30,15 @@ public class CarRestController {
     @GetMapping("/cars")
     public List<Car> findAll() {
         return carService.findAll();
+    }
+
+    @GetMapping("/cars/{id}")
+    public Car findById(@PathVariable int id) {
+        Car car = carService.findById(id);
+        if (car == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Car with ID " + id + " not found.");
+        }
+        return car;
     }
 
     @PostMapping("/cars")
