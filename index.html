@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Car Management CRUD</title>
+  <script defer src="/js/main.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-teal-600 min-h-screen p-8">
+
+  <!-- =================== LOGIN / REGISTER SECTION =================== -->
+  <div id="loginSection" class="max-w-md mx-auto bg-white rounded-2xl p-8 shadow-xl">
+    <h1 class="text-3xl font-bold text-orange-500 text-center mb-6">Welcome to FunCar</h1>
+
+    <!-- Login Form -->
+    <form id="loginForm" onsubmit="login(event)">
+      <input type="text" id="username" placeholder="Username" required
+             class="w-full mb-3 p-2 border rounded">
+      <input type="password" id="password" placeholder="Password" required
+             class="w-full mb-3 p-2 border rounded">
+      <button type="submit"
+              class="w-full bg-teal-600 text-white py-2 rounded font-bold mb-3">
+        Login
+      </button>
+    </form>
+
+    <p class="text-center text-gray-600">Don't have an account?
+      <button onclick="toggleRegister(true)" class="text-orange-500 font-semibold">Register</button>
+    </p>
+  </div>
+
+  <!-- Register Form -->
+  <div id="registerSection" class="hidden max-w-md mx-auto bg-white rounded-2xl p-8 shadow-xl">
+    <h1 class="text-3xl font-bold text-orange-500 text-center mb-6">Create an Account</h1>
+
+    <form id="registerForm" onsubmit="register(event)">
+      <input type="text" id="regUsername" placeholder="Username" required
+             class="w-full mb-3 p-2 border rounded">
+      <input type="password" id="regPassword" placeholder="Password" required
+             class="w-full mb-3 p-2 border rounded">
+      <button type="submit"
+              class="w-full bg-orange-500 text-white py-2 rounded font-bold mb-3">
+        Register
+      </button>
+    </form>
+
+    <p class="text-center text-gray-600">
+      Already have an account?
+      <button onclick="toggleRegister(false)" class="text-teal-600 font-semibold">Login</button>
+    </p>
+  </div>
+
+  <!-- =================== CAR MANAGEMENT SECTION =================== -->
+  <div id="carSection" class="hidden max-w-7xl mx-auto bg-white rounded-2xl p-8 shadow-xl">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-4xl font-bold text-orange-500">Cars Available</h1>
+      <button onclick="logout()"
+              class="bg-red-500 text-white px-6 py-2 rounded font-bold">
+        Logout
+      </button>
+    </div>
+    
+    <button onclick="openModal()" class="bg-teal-600 text-white px-6 py-2 rounded font-bold mb-6">
+      + Add New Car
+    </button>
+
+    <table class="w-full">
+      <thead class="bg-orange-400 text-white">
+        <tr>
+          <th class="px-4 py-3">ID</th>
+          <th class="px-4 py-3">LICENSE PLATE</th>
+          <th class="px-4 py-3">MAKE</th>
+          <th class="px-4 py-3">MODEL</th>
+          <th class="px-4 py-3">YEAR</th>
+          <th class="px-4 py-3">COLOR</th>
+          <th class="px-4 py-3">BODY TYPE</th>
+          <th class="px-4 py-3">ENGINE TYPE</th>
+          <th class="px-4 py-3">TRANSMISSION</th>
+          <th class="px-4 py-3">ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody id="carTableBody" class="bg-white"></tbody>
+    </table>
+  </div>
+
+  <!-- =================== MODAL (ADD / EDIT CAR) =================== -->
+  <div id="formSection" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div class="bg-white rounded-xl p-6 w-96">
+      <h2 id="modalTitle" class="text-2xl font-bold mb-4 text-orange-500">Add New Car</h2>
+      <form id="carForm" onsubmit="saveCar(event)">
+        <input type="hidden" id="carId">
+        <input type="text" id="make" placeholder="Make" required class="w-full mb-3 p-2 border rounded">
+        <input type="text" id="model" placeholder="Model" required class="w-full mb-3 p-2 border rounded">
+        <input type="number" id="year" placeholder="Year" required class="w-full mb-3 p-2 border rounded">
+        <input type="text" id="licensePlate" placeholder="License Plate" required class="w-full mb-3 p-2 border rounded">
+        <input type="text" id="color" placeholder="Color" required class="w-full mb-3 p-2 border rounded">
+        
+        <select id="bodyType" required class="w-full mb-3 p-2 border rounded">
+          <option value="">Select Body Type</option>
+          <option value="Sedan">Sedan</option>
+          <option value="SUV">SUV</option>
+          <option value="Hatchback">Hatchback</option>
+          <option value="Truck">Truck</option>
+          <option value="Coupe">Coupe</option>
+        </select>
+        
+        <select id="engineType" required class="w-full mb-3 p-2 border rounded">
+          <option value="">Select Engine Type</option>
+          <option value="Gasoline">Gasoline</option>
+          <option value="Diesel">Diesel</option>
+          <option value="Electric">Electric</option>
+          <option value="Hybrid">Hybrid</option>
+        </select>
+        
+        <select id="transmission" required class="w-full mb-4 p-2 border rounded">
+          <option value="">Select Transmission</option>
+          <option value="Automatic">Automatic</option>
+          <option value="Manual">Manual</option>
+        </select>
+
+        <div class="flex gap-3">
+          <button type="button" onclick="closeModal()" class="flex-1 bg-gray-500 text-white px-4 py-2 rounded font-bold">Cancel</button>
+          <button type="submit" class="flex-1 bg-orange-500 text-white px-4 py-2 rounded font-bold">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+</body>
+</html>
