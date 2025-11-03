@@ -1,23 +1,23 @@
 const apiBase = "http://localhost:2025/api/products"
 
-document.addEventListener("DOMContentLoaded", fetchCars)
+document.addEventListener("DOMContentLoaded", fetchproducts)
 
-function fetchCars() {
+function fetchProducts() {
     fetch(apiBase)
         .then(res => res.json())
-        .then(cars => {
+        .then(products => {
             const body = document.getElementById("productTableBody")
             body.innerHTML = ""
             var counter = 0;
-            cars.forEach(car => {
+            products.forEach(product => {
                 body.innerHTML += `
               <tr class="text-center">
                 <td class="border p-2">${++counter}</td>
-                <td class="border p-2">${car.make}</td>
-                <td class="border p-2">${car.model}</td>
+                <td class="border p-2">${product.name}</td>
+                <td class="border p-2">${product.description}</td>
                 <td class="border p-2">
-                  <button onclick="openEditModal(${car.id}, '${car.make}', '${car.model}', ${car.year}, '${car.color}')" class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">Edit</button>
-                  <button onclick="deleteCar(${car.id})" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</button>
+                  <button onclick="openEditModal(${product.id}, '${product.name}', '${product.description}', ${product.stock}, '${product.unit}')" class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">Edit</button>
+                  <button onclick="deleteproduct(${product.id})" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</button>
                 </td>
               </tr>`
             })
@@ -26,50 +26,50 @@ function fetchCars() {
 }
 
 function openCreateModal() {
-    document.getElementById("carForm").reset()
-    document.getElementById("carId").value = ""
-    document.getElementById("modalTitle").innerText = "Add Car"
-    document.getElementById("carModal").classList.remove("hidden")
+    document.getElementById("productForm").reset()
+    document.getElementById("productId").value = ""
+    document.getElementById("modalTitle").innerText = "Add product"
+    document.getElementById("productModal").classList.remove("hidden")
 }
 
-function openEditModal(id, make, model, year, color) {
-    document.getElementById("carId").value = id
-    document.getElementById("carMake").value = make
-    document.getElementById("carModel").value = model
-    document.getElementById("modalTitle").innerText = "Edit Car"
-    document.getElementById("carModal").classList.remove("hidden")
+function openEditModal(id, name, description, stock, unit) {
+    document.getElementById("productId").value = id
+    document.getElementById("productname").value = name
+    document.getElementById("productdescription").value = description
+    document.getElementById("modalTitle").innerText = "Edit product"
+    document.getElementById("productModal").classList.remove("hidden")
 }
 
 function closeModal() {
-    document.getElementById("carModal").classList.add("hidden")
+    document.getElementById("productModal").classList.add("hidden")
 }
 
-function saveCar(e) {
+function saveproduct(e) {
     e.preventDefault()
-    const id = document.getElementById("carId").value
-    const make = document.getElementById("carMake").value
-    const model = document.getElementById("carModel").value
+    const id = document.getElementById("productId").value
+    const name = document.getElementById("productname").value
+    const description = document.getElementById("productdescription").value
 
-    const car = { make, model, year, color }
+    const product = { name, description, stock, unit }
     const method = id ? "PUT" : "POST"
     const url = id ? `${apiBase}/${id}` : apiBase
 
     fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(car)
+        body: JSON.stringify(product)
     })
         .then(res => res.json())
         .then(() => {
             closeModal()
-            fetchCars()
+            fetchproducts()
         })
         .catch(err => console.error(err))
 }
 
-function deleteCar(id) {
-    if (!confirm("Delete this car?")) return
+function deleteproduct(id) {
+    if (!confirm("Delete this product?")) return
     fetch(`${apiBase}/${id}`, { method: "DELETE" })
-        .then(() => fetchCars())
+        .then(() => fetchproducts())
         .catch(err => console.error(err))
 }
