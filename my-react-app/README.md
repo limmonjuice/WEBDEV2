@@ -1,16 +1,17 @@
-# React + Vite
+# Reflection
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### 1. How does props help you reuse the same layout for different data?
 
-Currently, two official plugins are available:
+Props let you reuse one component structure while passing in different values, so you don’t have to rewrite the layout for every profile. The component stays the same, but the data changes—making your code more efficient, flexible, and easier to maintain.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+### 2. What happens if the user sets step to zero?
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+If the user sets the step to zero, clicking **“Add”** won’t change the count at all. Since you’re adding zero each time, the counter stays the same no matter how many times the button is clicked.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 3. Does the UI feel more interactive when content appears only when needed?
+
+Yes. When content appears only when needed, the UI feels more interactive and responsive because users see information based on their actions, making the experience feel dynamic rather than static.
