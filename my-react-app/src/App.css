@@ -41,7 +41,6 @@ h2 {
   font-size: 1.8em;
 }
 
-/* Profile List Styles */
 .profile-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -74,7 +73,6 @@ h2 {
   font-size: 0.95em;
 }
 
-/* Step Counter Styles */
 .step-counter {
   background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
   padding: 30px;
@@ -113,7 +111,7 @@ h2 {
   transform: scale(0.98);
 }
 
-/* Product Info Styles */
+
 .product-card {
   background: linear-gradient(135deg, #f1f8e9 0%, #dcedc8 100%);
   padding: 25px;
@@ -170,7 +168,43 @@ h2 {
   transform: scale(0.98);
 }
 
-/* Responsive Design */
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 30px;
+  min-height: calc(100vh - 160px);
+}
+
+.grid-left {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(76, 175, 80, 0.2);
+}
+
+.grid-right {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.grid-section {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(76, 175, 80, 0.2);
+}
+
+.grid-section.flex-grow {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 768px) {
   body {
     padding: 20px 10px;

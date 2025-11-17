@@ -5,9 +5,9 @@ function StepCounter() {
   const [step, setStep] = useState(1);
 
   return (
-    <div>
+    <div className="step-counter">
       <h2>Step Counter</h2>
-
+      
       <input
         type="number"
         value={step}
@@ -15,12 +15,16 @@ function StepCounter() {
         placeholder="Enter step value"
       />
 
-      <button onClick={() => setCount(count + step)}>
-        Add
-      </button>
-
-      <p>Count: {count}</p>
-      <p>Step: {step}</p>
+      <h3>{count}</h3>
+      
+      <div>
+        <button onClick={() => setCount(count + step)}>
+          Add {step}
+        </button>
+        <button onClick={() => setCount(0)}>
+          Reset
+        </button>
+      </div>
     </div>
   );
 }

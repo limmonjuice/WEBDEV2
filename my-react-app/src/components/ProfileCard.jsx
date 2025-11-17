@@ -1,10 +1,9 @@
 function ProfileCard({ name, age, role }) {
   return (
-    <div>
-      <p>Name: {name}</p>
+    <div className="profile-card">
+      <h3>{name}</h3>
       <p>Age: {age}</p>
       <p>Role: {role}</p>
-      <hr />
     </div>
   );
 }

@@ -5,27 +5,34 @@ import ProductInfo from "./components/ProductInfo";
 
 function App() {
   return (
-    <div className="app-container">
-      <h1>Matcharap Charap</h1>
+    <div className="app-wrapper">
+      <h1>☕ Matcharap Charap</h1>
 
-      <ProfileList />
+      <div className="grid-container">
+        <div className="grid-left">
+          <ProfileList />
+        </div>
 
-      <StepCounter />
+        <div className="grid-right">
+          <div className="grid-section">
+            <StepCounter />
+          </div>
 
-      <h2>Our Best Sellers</h2>
-      <ProductInfo 
-        name="Matcha Milk Tea"
-        price={120}
-        details="A refreshing and creamy drink with pearls."
-        className="product-card"
-      />
-
-      <ProductInfo 
-        name="Matcha Latte"
-        price={150}
-        details="Rich matcha with steamed milk and foam."
-        className="product-card"
-      />
+          <div className="grid-section flex-grow">
+            <h2>Our Best Sellers</h2>
+            <ProductInfo 
+              name="Matcha Milk Tea" 
+              price={120}
+              details="Rich Milk Tea topped with matcha-flavored syrup, steamed milk, and matcha drizzle. A sweet and smooth matcha experience."
+            />
+            <ProductInfo 
+              name="Matcha Latte" 
+              price={150}
+              details="Premium Japanese matcha powder blended with creamy steamed milk. Earthy, smooth, and full of antioxidants."
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
